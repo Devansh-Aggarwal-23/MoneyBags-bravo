@@ -100,6 +100,7 @@ public class CifServiceImpl implements CifService {
 
         return new CreditCardDetailsResponse(
                 cif.getCifId(),
+                cif.getAge(),
                 cif.getEmploymentType(),
                 cif.getSalary(),
                 cif.getKycStatus()
@@ -214,6 +215,7 @@ public class CifServiceImpl implements CifService {
         cif.setFirstName(request.firstName());
         cif.setLastName(request.lastName());
         cif.setDob(request.dob());
+        cif.setAge(request.age());
         cif.setEmail(request.email());
         cif.setNumber(request.number());
         cif.setAddress(request.address());
@@ -230,6 +232,7 @@ public class CifServiceImpl implements CifService {
         cif.setFirstName(request.firstName());
         cif.setLastName(request.lastName());
         cif.setDob(request.dob());
+        cif.setAge(request.age());
         cif.setEmail(request.email());
         cif.setNumber(request.number());
         cif.setAddress(request.address());
@@ -262,6 +265,7 @@ public class CifServiceImpl implements CifService {
                 cif.getFirstName(),
                 cif.getLastName(),
                 cif.getDob(),
+                cif.getAge(),
                 cif.getEmail(),
                 cif.getNumber(),
                 cif.getAddress(),

@@ -6,8 +6,8 @@ import com.moneybags.cif.domain.enums.KycStatus;
 import java.math.BigDecimal;
 
 public record CreditCardDetailsResponse(
-
         Long cifId,
+        Integer age,
         EmploymentType employmentType,
         BigDecimal salary,
         KycStatus kycStatus
