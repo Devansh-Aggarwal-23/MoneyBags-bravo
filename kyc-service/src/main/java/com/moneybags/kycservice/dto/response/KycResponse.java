@@ -1,11 +1,13 @@
 package com.moneybags.kycservice.dto.response;
 
 import com.moneybags.kycservice.enums.CifSyncStatus;
+import com.moneybags.kycservice.enums.EmploymentType;
 import com.moneybags.kycservice.enums.KycDecision;
 import com.moneybags.kycservice.enums.KycStatus;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.math.BigDecimal;
 
 public record KycResponse(
 
@@ -36,6 +38,10 @@ public record KycResponse(
         String postalCode,
 
         String country,
+
+        EmploymentType employmentType,
+
+        BigDecimal salary,
 
         KycStatus kycStatus,
 

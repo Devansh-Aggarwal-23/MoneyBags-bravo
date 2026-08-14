@@ -1,11 +1,16 @@
 package com.moneybags.kycservice.dto.request;
 
+import com.moneybags.kycservice.enums.EmploymentType;
+import com.moneybags.kycservice.enums.KycStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
 public record CreateKycRequest(
 
@@ -13,45 +18,47 @@ public record CreateKycRequest(
         Long cifId,
 
         @NotBlank
-        @Size(max = 200)
-        String customerName,
+        @Size(max = 100)
+        String firstName,
 
-        LocalDate dateOfBirth,
+        @NotBlank
+        @Size(max = 100)
+        String lastName,
 
+        @NotNull
+        @Past
+        LocalDate dob,
+
+        @NotBlank
+        @Pattern(regexp = "^[0-9]{10,15}$")
         @Size(max = 20)
-        String mobileNumber,
+        String number,
 
+        @NotBlank
         @Email
         @Size(max = 255)
         String email,
 
+        @NotBlank
+        @Pattern(regexp = "^[A-Z]{5}[0-9]{4}[A-Z]$")
         @Size(max = 20)
         String panNumber,
 
+        @NotBlank
+        @Pattern(regexp = "^[0-9]{12}$")
         @Size(max = 20)
         String aadhaarNumber,
 
-        @Size(max = 500)
-        String addressLine1,
-
-        @Size(max = 500)
-        String addressLine2,
-
-        @Size(max = 100)
-        String city,
-
-        @Size(max = 100)
-        String state,
-
-        @Size(max = 20)
-        String postalCode,
-
-        @Size(max = 100)
-        String country,
-
         @NotBlank
-        @Size(max = 100)
-        String initiatedBy
+        @Size(max = 500)
+        String address,
+
+        @NotNull
+        EmploymentType employmentType,
+
+        BigDecimal salary,
+
+        KycStatus kycStatus
 
 ) {
 }

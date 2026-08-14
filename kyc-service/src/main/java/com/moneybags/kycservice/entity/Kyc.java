@@ -1,6 +1,7 @@
 package com.moneybags.kycservice.entity;
 
 import com.moneybags.kycservice.enums.CifSyncStatus;
+import com.moneybags.kycservice.enums.EmploymentType;
 import com.moneybags.kycservice.enums.KycDecision;
 import com.moneybags.kycservice.enums.KycStatus;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.math.BigDecimal;
 
 @Getter
 @Entity
@@ -108,6 +110,22 @@ public class Kyc {
             length = 100
     )
     private String country;
+
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(
+            name = "employment_type",
+            length = 30
+    )
+    private EmploymentType employmentType;
+
+    @Setter
+    @Column(
+            name = "salary",
+            precision = 15,
+            scale = 2
+    )
+    private BigDecimal salary;
 
     @Setter
     @Enumerated(EnumType.STRING)

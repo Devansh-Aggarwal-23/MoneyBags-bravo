@@ -7,6 +7,7 @@ import com.moneybags.kycservice.dto.request.KycDecisionRequest;
 import com.moneybags.kycservice.dto.response.KycResponse;
 import com.moneybags.kycservice.entity.Kyc;
 import com.moneybags.kycservice.enums.CifSyncStatus;
+import com.moneybags.kycservice.enums.EmploymentType;
 import com.moneybags.kycservice.enums.KycDecision;
 import com.moneybags.kycservice.enums.KycStatus;
 import com.moneybags.kycservice.exception.BadRequestException;
@@ -16,6 +17,7 @@ import com.moneybags.kycservice.repository.KycRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -45,11 +47,31 @@ public class KycService {
             CreateKycRequest request
     ) {
 
+        validateEmploymentSnapshot(request);
+
         Kyc kyc = kycMapper.toEntity(request);
 
         Kyc savedKyc = kycRepository.save(kyc);
 
         return kycMapper.toResponse(savedKyc);
+    }
+
+    private void validateEmploymentSnapshot(CreateKycRequest request) {
+
+        if (request.employmentType() == EmploymentType.STUDENT
+                && request.salary() != null) {
+            throw new BadRequestException(
+                    "salary must be empty when employmentType is STUDENT"
+            );
+        }
+
+        if (request.employmentType() != EmploymentType.STUDENT
+                && (request.salary() == null
+                || request.salary().compareTo(BigDecimal.ZERO) <= 0)) {
+            throw new BadRequestException(
+                    "salary must be greater than zero for BUSINESS or SALARIED employment"
+            );
+        }
     }
 
     @Transactional(readOnly = true)

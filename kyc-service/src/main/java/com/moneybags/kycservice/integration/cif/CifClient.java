@@ -16,7 +16,6 @@ public class CifClient {
             @LoadBalanced RestClient.Builder builder,
             @Value("${services.cif.base-url}") String baseUrl
     ) {
-
         this.restClient = builder
                 .baseUrl(baseUrl)
                 .build();
@@ -53,4 +52,5 @@ public class CifClient {
             );
         }
     }
+
 }

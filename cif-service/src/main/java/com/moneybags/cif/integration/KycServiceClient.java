@@ -2,11 +2,13 @@ package com.moneybags.cif.integration;
 
 import com.moneybags.cif.dto.request.KycVerificationRequest;
 import com.moneybags.cif.exception.KycServiceUnavailableException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @Component
 public class KycServiceClient {
@@ -22,8 +24,12 @@ public class KycServiceClient {
                 .build();
     }
 
-    public void initiateKycVerification(KycVerificationRequest request) {
+    public void initiateKycVerification(
+            KycVerificationRequest request
+    ) {
+
         try {
+
             restClient.post()
                     .uri("/api/v1/kycs")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -31,9 +37,28 @@ public class KycServiceClient {
                     .retrieve()
                     .toBodilessEntity();
 
-        } catch (RestClientException | IllegalStateException exception) {
+        } catch (HttpClientErrorException exception) {
+
+            throw new IllegalStateException(
+                    "KYC rejected request. Status: "
+                            + exception.getStatusCode()
+                            + ", response: "
+                            + exception.getResponseBodyAsString(),
+                    exception
+            );
+
+        } catch (HttpServerErrorException exception) {
+
             throw new KycServiceUnavailableException(
-                    "Unable to initiate KYC verification",
+                    "KYC service returned server error: "
+                            + exception.getStatusCode(),
+                    exception
+            );
+
+        } catch (RestClientException | IllegalStateException exception) {
+
+            throw new KycServiceUnavailableException(
+                    "Unable to communicate with KYC service",
                     exception
             );
         }

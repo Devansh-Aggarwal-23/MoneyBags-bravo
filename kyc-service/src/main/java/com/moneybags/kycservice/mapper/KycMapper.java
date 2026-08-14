@@ -17,20 +17,19 @@ public class KycMapper {
         Kyc kyc = new Kyc();
 
         kyc.setCifId(request.cifId());
-        kyc.setCustomerName(request.customerName());
-        kyc.setDateOfBirth(request.dateOfBirth());
-        kyc.setMobileNumber(request.mobileNumber());
+        kyc.setCustomerName(
+                (request.firstName() + " " + request.lastName()).trim()
+        );
+        kyc.setDateOfBirth(request.dob());
+        kyc.setMobileNumber(request.number());
         kyc.setEmail(request.email());
         kyc.setPanNumber(request.panNumber());
         kyc.setAadhaarNumber(request.aadhaarNumber());
-        kyc.setAddressLine1(request.addressLine1());
-        kyc.setAddressLine2(request.addressLine2());
-        kyc.setCity(request.city());
-        kyc.setState(request.state());
-        kyc.setPostalCode(request.postalCode());
-        kyc.setCountry(request.country());
+        kyc.setAddressLine1(request.address());
+        kyc.setEmploymentType(request.employmentType());
+        kyc.setSalary(request.salary());
 
-        kyc.setInitiatedBy(request.initiatedBy());
+        kyc.setInitiatedBy("CIF_SERVICE");
 
         kyc.setKycStatus(KycStatus.PENDING);
 
@@ -60,6 +59,8 @@ public class KycMapper {
                 kyc.getState(),
                 kyc.getPostalCode(),
                 kyc.getCountry(),
+                kyc.getEmploymentType(),
+                kyc.getSalary(),
                 kyc.getKycStatus(),
                 kyc.getDecision(),
                 kyc.getRejectionReason(),
