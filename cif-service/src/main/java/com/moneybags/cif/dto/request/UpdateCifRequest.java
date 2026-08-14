@@ -1,11 +1,7 @@
 package com.moneybags.cif.dto.request;
 
 import com.moneybags.cif.domain.enums.EmploymentType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +17,10 @@ public record UpdateCifRequest(
         @NotNull(message = "Date of birth is required")
         @Past(message = "Date of birth must be in the past")
         LocalDate dob,
+
+        @NotNull(message = "Age is required")
+        @Min(value = 0, message = "Age cannot be negative")
+        Integer age,
 
         @NotBlank(message = "Email is required")
         @Email(message = "Email must be valid")

@@ -8,11 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CifResponse(
-
         Long cifId,
         String firstName,
         String lastName,
         LocalDate dob,
+        Integer age,
         String email,
         String number,
         String address,

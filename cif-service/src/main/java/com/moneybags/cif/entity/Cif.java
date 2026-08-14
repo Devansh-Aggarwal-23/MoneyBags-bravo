@@ -34,6 +34,9 @@ public class Cif {
     @Column(name = "dob", nullable = false)
     private LocalDate dob;
 
+    @Column(name = "age", nullable = false)
+    private Integer age;
+
     @Column(name = "email", nullable = false, length = 150)
     private String email;
 
@@ -108,6 +111,10 @@ public class Cif {
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
+
+    public Integer getAge() {return age;}
+
+    public void setAge(Integer age) {this.age = age;}
 
     public String getEmail() {
         return email;
