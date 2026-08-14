@@ -30,6 +30,7 @@
         <module>discovery-server</module>
         <module>api-gateway</module>
         <module>kyc-service</module>
+        <module>cif-service</module>
     </modules>
 
     <dependencyManagement>
