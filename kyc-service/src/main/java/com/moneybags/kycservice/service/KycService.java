@@ -254,7 +254,8 @@ public class KycService {
             notificationClient
                     .sendKycStatusNotification(
                             kyc.getCifId(),
-                            kyc.getKycStatus()
+                            kyc.getKycStatus(),
+                            kyc.getRejectionReason()
                     );
 
         } catch (Exception exception) {

@@ -23,19 +23,21 @@ public class NotificationClient {
 
     public void sendKycStatusNotification(
             Long cifId,
-            KycStatus kycStatus
+            KycStatus kycStatus,
+            String rejectionReason
     ) {
 
         NotificationRequest request =
                 new NotificationRequest(
                         cifId,
-                        kycStatus
+                        kycStatus,
+                        rejectionReason
                 );
 
         try {
 
             restClient.post()
-                    .uri("/internal/notifications")
+                    .uri("/internal/v1/notifications/kyc-status")
                     .body(request)
                     .retrieve()
                     .toBodilessEntity();
